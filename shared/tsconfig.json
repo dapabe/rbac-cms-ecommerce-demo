@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"outDir": "dist",
+		"declaration": true,
+		"declarationMap": true,
+		"emitDeclarationOnly": false,
+		"composite": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"target": "ES2020",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true
+	},
+	"include": ["src"]
+}

@@ -1,0 +1,16 @@
+packages:
+  - backend
+  - www
+  - shared
+catalog:
+  zod: 3.25.49
+  typescript: ^5.7.3
+  typescript-eslint: ^8.20.0
+onlyBuiltDependencies:
+  - '@nestjs/core'
+  - '@swc/core'
+  - '@tailwindcss/oxide'
+  - bcrypt
+  - esbuild
+  - sharp
+  - sqlite3

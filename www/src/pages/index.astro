@@ -1,0 +1,12 @@
+---
+
+import BaseLayout from "#layouts/base.layout.astro";
+import {CoercedIntegerSchema} from "@mono/shared"
+---
+
+<BaseLayout>
+		<h1>Astro</h1>
+		<p>
+			{CoercedIntegerSchema.parse("123")}
+		</p>
+</BaseLayout>
