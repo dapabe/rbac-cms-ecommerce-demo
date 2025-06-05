@@ -5,17 +5,19 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
 import { ContentModule } from './content/content.module';
 import { TypedEnv } from './common/TypedEnv';
+import * as path from 'node:path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: path.join(process.cwd(), '.env'),
     }),
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'cms.sqlite',
+      database: path.resolve(process.cwd(), '..', '.temp', 'cms.sqlite'),
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: false,
+      synchronize: process.env.NODE_ENV !== 'production',
     }),
     JwtModule.register({
       global: true,

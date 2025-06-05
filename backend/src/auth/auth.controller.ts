@@ -7,11 +7,10 @@ import { AuthDTO, IAuthDTOSchema } from '@mono/shared';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
+  @Post('login')
   @UsePipes(new ZodValidationPipe(AuthDTO.LogIn))
   login(@Body() authDto: IAuthDTOSchema['LogIn']) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unnecessary-type-assertion
-    return this.authService.login(authDto.username!, authDto.password!);
+    return this.authService.login(authDto.username, authDto.password);
   }
 
   // @Get()

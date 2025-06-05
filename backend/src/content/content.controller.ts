@@ -15,8 +15,7 @@ import { ContentDTO, ContentDTOSchema } from './dto/content.dto';
 import { ZodValidationPipe } from 'src/common/ZodValidation.pipe';
 import { AuthGuard } from '@nestjs/passport';
 import { RoleGuard } from 'src/common/guards/role.guard';
-import { UserRole } from 'src/auth/entities/user.entity';
-import { CoercedIntegerSchema } from '@mono/shared';
+import { CoercedIntegerSchema, UserRole } from '@mono/shared';
 
 @Controller('content')
 @UseGuards(AuthGuard('jwt'))

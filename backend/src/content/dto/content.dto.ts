@@ -1,6 +1,6 @@
-import { IndexedClassDTO } from 'src/common/types/indexed-class-dto';
 import { z } from 'zod';
 import { ContentStatus, ContentType } from '../entities/content.entity';
+import { IndexedClassDTO } from '@mono/shared';
 
 export class ContentDTO {
   static Read = z.object({

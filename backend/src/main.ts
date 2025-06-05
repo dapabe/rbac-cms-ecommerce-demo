@@ -5,10 +5,7 @@ import { TypedEnv } from './common/TypedEnv';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
-      origin:
-        process.env.NODE_ENV === 'development'
-          ? ['http://localhost:4321', 'http://localhost:3000']
-          : TypedEnv.FRONTEND_URL,
+      origin: TypedEnv.FRONTEND_URL,
       credentials: true,
     },
   });

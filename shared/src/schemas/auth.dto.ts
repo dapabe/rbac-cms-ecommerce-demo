@@ -5,7 +5,7 @@ import { UserRole } from "../enums/user.enums";
 export class AuthDTO {
 	static Read = z.object({
 		id: z.number().int(),
-		username: z.string().min(3).max(20).default("guest"),
+		username: z.string().min(3).max(20),
 		role: z.nativeEnum(UserRole),
 		isActive: z.boolean(),
 	});
@@ -15,7 +15,7 @@ export class AuthDTO {
 		isActive: true,
 		role: true,
 	}).extend({
-		password: z.string().min(6).max(100).default("guest"),
+		password: z.string().min(6).max(100),
 	});
 }
 

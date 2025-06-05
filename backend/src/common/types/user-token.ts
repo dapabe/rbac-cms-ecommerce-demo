@@ -1,6 +1,6 @@
-import { AuthDTOSchema } from 'src/auth/dto/auth.dto';
+import { IAuthDTOSchema } from '@mono/shared';
 
 export type UserToken = {
   access_token: string;
-  user: Omit<AuthDTOSchema['Read'], 'isActive'>;
+  user: Omit<IAuthDTOSchema['Read'], 'isActive'>;
 };
