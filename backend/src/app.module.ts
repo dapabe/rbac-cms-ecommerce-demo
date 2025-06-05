@@ -4,14 +4,25 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
 import { ContentModule } from './content/content.module';
-import { TypedEnv } from './common/TypedEnv';
 import * as path from 'node:path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: path.join(process.cwd(), '.env'),
+      envFilePath: [
+        path.join(process.cwd(), '.env.production'),
+        path.join(process.cwd(), '.env.development'),
+      ],
+      cache: true,
+      load: [
+        () => ({
+          NODE_ENV: process.env.NODE_ENV,
+          PORT: parseInt(process.env.PORT, 10),
+          JWT_SECRET: process.env.JWT_SECRET,
+          FRONTEND_URL: process.env.FRONTEND_URL,
+        }),
+      ],
     }),
     TypeOrmModule.forRoot({
       type: 'sqlite',
@@ -21,7 +32,7 @@ import * as path from 'node:path';
     }),
     JwtModule.register({
       global: true,
-      secret: TypedEnv.JWT_SECRET,
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '24h' },
     }),
     AuthModule,
