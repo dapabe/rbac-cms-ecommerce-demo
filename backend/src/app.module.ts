@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
-import { ContentModule } from './content/content.module';
+import { ContentModule } from './product/product.module';
 import * as path from 'node:path';
 
 @Module({

@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserToken } from 'src/common/types/user-token';
-import { IAuthDTOSchema, UserRole } from '@mono/shared';
+import { IAuthDTO, UserRole } from '@mono/shared';
 
 @Injectable()
 export class AuthService {
@@ -53,7 +53,7 @@ export class AuthService {
   async validateUser(
     username: string,
     password: string,
-  ): Promise<IAuthDTOSchema['Read'] | null> {
+  ): Promise<IAuthDTO['Read'] | null> {
     const user = await this.userRepo.findOne({ where: { username } });
 
     if (user && (await bcrypt.compare(password, user.password))) {

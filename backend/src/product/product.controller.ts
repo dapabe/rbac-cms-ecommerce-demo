@@ -10,22 +10,26 @@ import {
   UseGuards,
   Query,
 } from '@nestjs/common';
-import { ContentService } from './content.service';
-import { ContentDTO, ContentDTOSchema } from './dto/content.dto';
-import { ZodValidationPipe } from 'src/common/ZodValidation.pipe';
+import { ProductService } from './product.service';
+import { ZodPipe } from 'src/common/ZodValidation.pipe';
 import { AuthGuard } from '@nestjs/passport';
 import { RoleGuard } from 'src/common/guards/role.guard';
-import { CoercedIntegerSchema, UserRole } from '@mono/shared';
+import {
+  CoercedIntegerSchema,
+  UserRole,
+  IProductDTO,
+  ProductDTOSchema,
+} from '@mono/shared';
 
 @Controller('content')
 @UseGuards(AuthGuard('jwt'))
-export class ContentController {
-  constructor(private readonly contentService: ContentService) {}
+export class ProductController {
+  constructor(private readonly contentService: ProductService) {}
 
   @Post()
   @UseGuards(new RoleGuard([UserRole.ADMIN]))
-  @UsePipes(new ZodValidationPipe(ContentDTO.Create))
-  create(@Body() createContentDto: ContentDTOSchema['Create']) {
+  @UsePipes(new ZodPipe(ProductDTOSchema.Create))
+  create(@Body() createContentDto: IProductDTO['Create']) {
     return this.contentService.create(createContentDto);
   }
 
@@ -35,18 +39,16 @@ export class ContentController {
   }
 
   @Get(':id')
-  findOne(
-    @Param('id', new ZodValidationPipe(CoercedIntegerSchema)) id: number,
-  ) {
+  findOne(@Param('id', new ZodPipe(CoercedIntegerSchema)) id: number) {
     return this.contentService.findOne(id);
   }
 
   @Patch(':id')
   @UseGuards(new RoleGuard([UserRole.ADMIN]))
-  @UsePipes(new ZodValidationPipe(ContentDTO.Update))
+  @UsePipes(new ZodPipe(ProductDTOSchema.Update))
   update(
-    @Param('id', new ZodValidationPipe(CoercedIntegerSchema)) id: number,
-    @Body() updateContentDto: ContentDTOSchema['Update'],
+    @Param('id', new ZodPipe(CoercedIntegerSchema)) id: number,
+    @Body() updateContentDto: IProductDTO['Update'],
   ) {
     return this.contentService.update(id, updateContentDto);
   }
@@ -54,7 +56,7 @@ export class ContentController {
   @Delete(':id')
   @UseGuards(new RoleGuard([UserRole.ADMIN]))
   remove(
-    @Param('id', new ZodValidationPipe(CoercedIntegerSchema))
+    @Param('id', new ZodPipe(CoercedIntegerSchema))
     id: number,
   ) {
     return this.contentService.remove(id);

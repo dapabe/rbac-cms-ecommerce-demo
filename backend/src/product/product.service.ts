@@ -1,24 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { ContentDTOSchema } from './dto/content.dto';
-import { ContentStatus, EntityContent } from './entities/content.entity';
+import { EntityProduct } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { IProductDTO } from '@mono/shared';
 
 @Injectable()
-export class ContentService {
+export class ProductService {
   constructor(
-    @InjectRepository(EntityContent)
-    private contentRepo: Repository<EntityContent>,
+    @InjectRepository(EntityProduct)
+    private contentRepo: Repository<EntityProduct>,
     // private staticGeneratorService: StaticGeneratorService,
   ) {}
 
   async findAll(includeAll = false) {
-    const whereCondition = includeAll
-      ? {}
-      : { status: ContentStatus.PUBLISHED };
+    // const whereCondition = includeAll
+    //   ? {}
+    //   : { status: ContentStatus.PUBLISHED };
 
     return this.contentRepo.find({
-      where: whereCondition,
+      // where: whereCondition,
       order: { createdAt: 'DESC' },
     });
   }
@@ -27,13 +27,13 @@ export class ContentService {
     return this.contentRepo.findOne({ where: { id } });
   }
 
-  async findBySlug(slug: string) {
-    return this.contentRepo.findOne({
-      where: { slug, status: ContentStatus.PUBLISHED },
-    });
-  }
+  // async findBySlug(slug: string) {
+  //   return this.contentRepo.findOne({
+  //     where: { slug },
+  //   });
+  // }
 
-  async create(contentData: Partial<ContentDTOSchema['Create']>) {
+  async create(contentData: IProductDTO['Create']) {
     const content = this.contentRepo.create(contentData);
     const savedContent = await this.contentRepo.save(content);
 
@@ -43,7 +43,7 @@ export class ContentService {
     return savedContent;
   }
 
-  async update(id: number, contentData: Partial<ContentDTOSchema['Update']>) {
+  async update(id: number, contentData: IProductDTO['Update']) {
     await this.contentRepo.update(id, contentData);
     const updatedContent = await this.findOne(id);
 

@@ -5,11 +5,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EntityUser } from './entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/common/strategies/jwt.strategy';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [TypeOrmModule.forFeature([EntityUser]), PassportModule],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: JwtStrategy,
+    },
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}

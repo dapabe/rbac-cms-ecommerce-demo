@@ -1,15 +1,15 @@
 import { Controller, Post, Body, UsePipes } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ZodValidationPipe } from 'src/common/ZodValidation.pipe';
-import { AuthDTO, IAuthDTOSchema } from '@mono/shared';
+import { ZodPipe } from 'src/common/ZodValidation.pipe';
+import { AuthDTOSchema, IAuthDTO } from '@mono/shared';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  @UsePipes(new ZodValidationPipe(AuthDTO.LogIn))
-  login(@Body() authDto: IAuthDTOSchema['LogIn']) {
+  @UsePipes(new ZodPipe(AuthDTOSchema.LogIn))
+  login(@Body() authDto: IAuthDTO['LogIn']) {
     return this.authService.login(authDto.username, authDto.password);
   }
 
